@@ -10,8 +10,8 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
+    <script src="{{ asset('js/app.js') }}"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -30,14 +30,15 @@
                     <h3>Sign Up</h3>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
+                    <form id="form-register" name="form-register">
                         @csrf
+                        <input id="all_users" type="hidden" value="{{ $users }}">
                         <div class="input-group form-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
                             </div>
                             <input id="name" type="name" class="form-control @error('name') is-invalid @enderror" name="name"
-                                value="{{ old('name') }}" required autocomplete="name" autofocus placeholder="Name">
+                                value="{{ old('name') }}" autocomplete="name" autofocus placeholder="Name">
                             @error('name')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -49,7 +50,7 @@
                                 <span class="input-group-text"><i class="fa fa-envelope"></i></span>
                             </div>
                             <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                                name="email" value="{{ old('email') }}" required autocomplete="email" autofocus
+                                name="email" value="{{ old('email') }}" autocomplete="email" autofocus
                                 placeholder="Email">
                             @error('email')
                                 <span class="invalid-feedback" role="alert">
@@ -62,7 +63,7 @@
                                 <span class="input-group-text"><i class="fas fa-phone"></i></span>
                             </div>
                             <input id="phone" type="phone" class="form-control @error('phone') is-invalid @enderror"
-                                name="phone" value="{{ old('phone') }}" required autocomplete="phone" autofocus
+                                name="phone" value="{{ old('phone') }}" autocomplete="phone" autofocus
                                 placeholder="Phone">
                             @error('phone')
                                 <span class="invalid-feedback" role="alert">
@@ -75,7 +76,7 @@
                                 <span class="input-group-text"><i class="fas fa-address-card"></i></span>
                             </div>
                             <input id="address" type="address" class="form-control @error('address') is-invalid @enderror"
-                                name="address" value="{{ old('address') }}" required autocomplete="address" autofocus
+                                name="address" value="{{ old('address') }}" autocomplete="address" autofocus
                                 placeholder="Address">
                             @error('address')
                                 <span class="invalid-feedback" role="alert">
@@ -88,8 +89,11 @@
                                 <span class="input-group-text"><i class="fas fa-key"></i></span>
                             </div>
                             <input id="password" type="password"
-                                class="form-control @error('password') is-invalid @enderror" name="password" required
+                                class="form-control @error('password') is-invalid @enderror" name="password"
                                 autocomplete="current-password" placeholder="Password">
+                            <div>
+                                <i class="fas fa-eye-slash show-pass cursor-pointer"></i>
+                            </div>
                             @error('password')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -100,11 +104,14 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-key"></i></span>
                             </div>
-                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation"
-                                required autocomplete="new-password" placeholder="Password Confirm">
+                            <input id="password_confirmation" type="password" class="form-control" name="password_confirmation"
+                             autocomplete="new-password" placeholder="Password Confirm">
+                             <div>
+                                <i class="fas fa-eye-slash show-confirmpass cursor-pointer"></i>
+                            </div>
                         </div>
                         <div class="form-group">
-                            <input type="submit" value="Register" class="btn float-right login_btn">
+                            <button id="btn-register" class="btn float-right login_btn">Register</button>
                         </div>
                     </form>
                 </div>
@@ -116,5 +123,6 @@
             </div>
         </div>
     </div>
+    <div class="pageLoader"></div>
 </body>
 </html>
