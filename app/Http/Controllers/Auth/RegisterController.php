@@ -41,6 +41,20 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
+    
+    /**
+     * Show the application registration form.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function showRegistrationForm()
+    {
+        $allUser = User::where('role_id', 2)->get()->pluck('phone','email')->toArray();
+        $users = json_encode(array_merge(array_values($allUser), array_keys($allUser)));
+
+        return view('auth.register', compact('users'));
+    }
+
     /**
      * Get a validator for an incoming registration request.
      *
